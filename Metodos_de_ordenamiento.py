@@ -1,13 +1,24 @@
-import time, random
+import time, random, heapq
 
 def numerosaleatorios():
-    '''Genera una lista de diez mil numeros aleatorios'''
+    '''Genera una lista de mil cien numeros aleatorios'''
     v = []
     for i in range(1,1000):
            num = int(random.randint(1,500))
            v.append(num)
     return v
-    
+
+
+def heapsort(lst):
+    """Ordena usando la libreria <heapq> incluida en python"""
+    heap = list(lst)
+    # Hace la lista una pila
+    heapq.heapify(heap)
+    #Los elementos  salen de la pila en orden ascendente
+    for i in xrange(len(lst)):
+        lst[i] = heapq.heappop(heap)
+
+
 def calcularTiempo(metodo):
    def metodo_a_ejecutar(*argumentos):
        # Tiempo de inicio de ejecucion.
@@ -22,7 +33,8 @@ def calcularTiempo(metodo):
        return tiempo_total
    # Devolvemos la funcion que se ejecuta.
    return metodo_a_ejecutar
-    
+
+
 def burbuja(v):
     """Metodo ordenamiento burbuja"""
     for i in range(len(v)-1):
@@ -66,6 +78,7 @@ def quicksort(v,izq,der):
 
 
 def HeapSort(A):
+    """Metodo de ordenamiento HeapSort"""
     def heapify(A):
         start = (len(A) - 2) / 2
         while start >= 0:
@@ -91,30 +104,39 @@ def HeapSort(A):
         end -= 1
 
 
-def shellSort(sample):
+def shellSort(v):
     """Metodo de ordenamiento shell"""
-    length = len(sample)
+    length = len(v)
     gap = int(length/2)
     while(gap >= 1):
      i = gap
      while(i < length):
-      value = sample[i]
+      value = v[i]
       j = i
-      while(j-gap >= 0 and value < sample[j - gap]):
-       sample[j] = sample[j - gap]
+      while(j-gap >= 0 and value < v[j - gap]):
+       v[j] = v[j - gap]
        j -= gap
-      sample[j] = value
+      v[j] = value
       i+=1
      gap = int(gap/2)
-#     print("sorted sample=",sample)    
+
+
 print("El tiempo en segundos de los metodos de ordenamiento es: \n")
-t1 = calcularTiempo(burbuja)(numerosaleatorios())
-print("Ordenamiento Burbuja: %10.5f" % t1)
-t2 = calcularTiempo(shellSort)(numerosaleatorios())
-print("Ordenamiento Shell: %15.5f" % t2)
-t3 = calcularTiempo(ordenSeleccion)(numerosaleatorios())
-print("Ordenamiento por Seleccion: %10.5f" % t3)
-t5 = calcularTiempo(HeapSort)(numerosaleatorios())
-print("Ordenamiento HeapSort: %10.5f" % t5)
-t4 = calcularTiempo(quicksort)(numerosaleatorios(), 0, len(numerosaleatorios())-1)
-print("Ordenamiento QuickSort: %10.5f" % t4)
+
+tiempoBurbuja = calcularTiempo(burbuja)(numerosaleatorios())
+print("Ordenamiento Burbuja: %10.5f" % tiempoBurbuja)
+
+tiempoSeleccion = calcularTiempo(ordenSeleccion)(numerosaleatorios())
+print("Ordenamiento por Seleccion: %10.5f" % tiempoSeleccion)
+
+tiempoShell = calcularTiempo(shellSort)(numerosaleatorios())
+print("Ordenamiento Shell: %15.5f" % tiempoShell)
+
+tiempoHeapSort = calcularTiempo(HeapSort)(numerosaleatorios())
+print("Ordenamiento HeapSort: %10.5f" % tiempoHeapSort)
+
+tiempoHeapSortPython = calcularTiempo(heapsort)(numerosaleatorios())
+print("Ordenamiento HeapSort Python: %10.5f" % tiempoHeapSortPython)
+
+tiempoQuickSort = calcularTiempo(quicksort)(numerosaleatorios(), 0, len(numerosaleatorios())-1)
+print("Ordenamiento QuickSort: %10.5f" % tiempoQuickSort)
