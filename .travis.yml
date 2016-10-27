@@ -7,4 +7,4 @@ python:
 install:
   - pip install spyder
 # command to run tests
-script: ./Metodos_de_ordenamiento.py
+script: python Metodos_de_ordenamiento.py
